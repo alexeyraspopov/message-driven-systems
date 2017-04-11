@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>Robust message-driven systems</title>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400i,700,700i">
+	<link rel="stylesheet" href="node_modules/shower-ribbon/styles/screen-16x10.css">
+	<!-- <link rel="stylesheet" href="FiraCode/distr/fira_code.css"> -->
+	<link rel="stylesheet" href="custom.css">
+</head>
+<body class="shower list">
+	<header class="caption">
+		<h1>Robust message-driven systems</h1>
+		<p><a href="https://alexeyraspopov.github.io/">Alexey Raspopov</a>, <a href="https://datarobot.com/">DataRobot</a>.</p>
+	</header>
+
+	<section class="slide">
+		<h2 class="title">Robust and efficient <span class="accent">message</span>-driven development</h2>
+	</section>
+
+	<section class="slide darkside">
+		<h2 class="accent">Дисклеймер</h2>
+		<p>Я не пытаюсь рекламировать очередной фреймворк. Рассказываю о своем опыте, наблюдениях, и экспериментах.</p>
+		<p class="next">Вообще, некоторый код есть на Гитхабе, <br>но вы <em class="accent">не готовы</em>.</p>
+	</section>
+
+	<section class="slide">
+		<ul>
+			<li>Разработчик в <a href="https://datarobot.com/">DataRobot</a></li>
+			<li>Делаю разные штуки, делюсь на <a href="https://github.com/alexeyraspopov">Гитхабе</a></li>
+			<li>Умею стрелять в шутерах на консолях</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<p>Доклад о невероятных приключениях одного маленького <span class="accent">шаблона</span>. <span class="next">Доклад о чем-то общем для многих <span class="accent">фреймворков</span>, которые делают это <span class="accent">по-разному</span>.</span> <span class="next">Доклад о мощных <span class="accent">штуках</span>, что скрываются где-то <span class="accent">рядом</span>, достаточно лишь присмотреться.</span></p>
+	</section>
+
+	<section class="slide darkside">
+		<p class="title">Боже, что он <em class="accent">несёт</em>?</p>
+	</section>
+
+	<section class="slide">
+		<h2 class="title">💁 Наблюдатель</h2>
+	</section>
+
+	<section class="slide">
+		<p><span class="accent">Наблюдатель</span> уменьшает связанность системы предоставляя возможность уведомлять зависимые сущности о некотором <em class="accent">событии</em>.</p>
+	</section>
+
+	<section class="slide">
+		<ul>
+			<li>Event Emitter</li>
+			<li>Publisher/Subscriber</li>
+			<li>Message Dispatcher</li>
+			<li>Channels (CSP)</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<ol>
+			<li>Синхронная (блокирующая) реализация</li>
+			<li>Зоопарк API без общей основы</li>
+			<li>Строковые имена событий</li>
+		</ol>
+	</section>
+
+	<section class="slide">
+		<ol>
+			<li>Генераторы событий</li>
+			<li>Процессоры</li>
+			<li>Потребители событий</li>
+		</ol>
+	</section>
+
+	<section class="slide">
+		<p>Тут будут слайды о планировании выполнения, генераторах, асинхронных генераторах и функциям типа rAF и rIC.</p>
+	</section>
+
+	<section class="slide darkside">
+		<p>Лёша работает над слайдами, <br>не торопите, пожалуйста.</p>
+	</section>
+
+	<section class="slide">
+		<p class="title">Event <span class="next">&amp; Command</span></p>
+	</section>
+
+	<section class="slide">
+		<p>Введенный в Flux и использованный в клонах (Reflux, Redux, etc) термин <strong class="accent">Action</strong> размывает разницу между командами и событиями.</p>
+	</section>
+
+	<section class="slide">
+		<h2 class="title accent">Message</h2>
+	</section>
+
+	<section class="slide blueprint">
+		<pre>
+			<code><span class="accent">class</span> <span class="accent-2">ConcreteMessage</span> <span class="accent">extends</span> <span class="accent-2">Message</span>&lt;<span class="accent-3">T</span>&gt; {}</code>
+		</pre>
+	</section>
+
+	<section class="slide blueprint">
+		<pre>
+			<code><span class="accent">new</span> <span class="accent-2">JobStatusRequest</span>({ jobId })</code>
+			<code><span class="accent">new</span> <span class="accent-2">DatasetParsingFailure</span>({ reason })</code>
+		</pre>
+	</section>
+
+	<section class="slide">
+		<ul>
+			<li>Message Dispatcher</li>
+			<li>Mailbox</li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<p class="title"><a href="http://www.reactivemanifesto.org/" target="_blank">reactivemanifesto.org</a></p>
+	</section>
+
+	<section class="slide">
+		<p class="title">Лакэйшн Транспаренси</p>
+	</section>
+
+	<section class="slide">
+		<h2 class="title">Actor</h2>
+	</section>
+
+	<section class="slide">
+		<p><strong class="accent">Actor</strong> (рус. <strong>áктор</strong>) &mdash; <br>универсальный примитив для вычислений. Ничего ни с кем не шарит, обмен данными производит с помощью <span class="accent">сообщений</span>.</p>
+	</section>
+
+	<section class="slide">
+		<p>В ответ на полученное сообщение актор <em class="accent">может</em>:</p>
+
+		<ol>
+			<li class="next">Отправить новое сообщение</li>
+			<li class="next">Создать другие акторы</li>
+			<li class="next">Изменить собственное состояние</li>
+		</ol>
+	</section>
+
+	<section class="slide blueprint">
+		<pre>
+			<code><span class="accent">class</span> ConcreteActor <span class="accent">extends</span> Actor {</code>
+			<code>  <span class="accent-2">receive</span>(message: Message&lt;<span class="accent-3">T</span>&gt;) {</code>
+			<code class="comment">    // свитч-кейс, хз</code>
+			<code>  }</code>
+			<code>}</code>
+		</pre>
+	</section>
+
+	<section class="slide darkside" id="contacts">
+		<h2 class="title">Лайкос, шейр, подписон</h2>
+		<ul>
+			<li><a href="https://twitter.com/alexeyraspopov"><span class="accent">twitter.com</span>/alexeyraspopov</a></li>
+			<li><a href="https://github.com/alexeyraspopov"><span class="accent">github.com</span>/alexeyraspopov</a></li>
+		</ul>
+	</section>
+
+	<section class="slide">
+		<p class="title">Спасибо за внимание</p>
+	</section>
+
+	<footer class="badge">
+		<a href="https://github.com/shower/shower">Powered by Shower</a>
+	</footer>
+
+  <script src="node_modules/shower-core/shower.min.js"></script>
+	<!-- Copyright © 2017 Alexey Raspopov. -->
+</body>
+</html>
